@@ -2,6 +2,7 @@
 Takes movie data from CSV file to predict movies' IMDb score
 
 software prerequisites- 
+
 python (preferably 3.5.0)
 pip install sqlite3 (should be included with python)
 pip install numpy (should be included with python)
@@ -9,11 +10,13 @@ pip install pandas
 install tensorflow (https://www.tensorflow.org/install/)
 
 data prerequisites-
+
 csv formatted with label names as first row and columns of values
 advised that one label is "movie_title" and output label is "imdb_score"
 advised dataset- https://www.kaggle.com/deepmatrix/imdb-5000-movie-dataset
 
 pipeline order-
+
 imdb_sql_generator- takes a csv file of movie data and converts each row to a query to be stored in a database
 	python imdb_sql_generator.py database_directory_path database_name csv_path (arguments optional)
 	-if choose to have no arguments- go into code and pre-set the arguments:
@@ -39,6 +42,7 @@ imdb_fc_nn_reg- takes input arrays and output labels (single score values) previ
 	network_name = neural_network_name
 	
 files generated-
+
 imdb_sql_generator-
 	database- database_directory_path/database_name.db
 imdb_io_generator-
