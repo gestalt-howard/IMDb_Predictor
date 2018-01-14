@@ -3,6 +3,8 @@
 
 import pandas as pd
 import numpy as np
+from gensim.models import Word2Vec  # Latent semantic analysis package
+import os
 
 
 # Function to break up strings with pipes
@@ -38,43 +40,67 @@ def vector_gen(df_row, key_list_df):
     Receives row from pandas data frame and converts it into required input to neural network
     Conversion is done using keys stored in key_list
     """
+    input_list = []
     binary_list = [0, 1, 4, 7, 8, 10, 11, 13, 15]
     norm_list = [2, 3, 5, 12]
     for ind, element in enumerate(df_row):
         if ind in binary_list:
-            print('Index value:', ind)
-            binary_vector_generate(element, key_list_df, ind)
+            input_list.append(binary_vector_generate(element, key_list_df, ind))
         elif ind == genre_index:
             # Special treatment to split words by pipes
-            pass
-        elif ind == keyword_agg:
+            word_list = break_pipe(element)
+            input_list.append(binary_vector_generate(word_list, key_list_df, ind))
+        elif ind == keyword_index:
             # Special treatment using word embedding
-            pass
+            vsize = longest_len*vector_size
+            word_vec = np.zeros(vsize)
+            embed_words = replace_pipe(element)
+            embed_words = embed_words.split()
+            for index, word in enumerate(embed_words):
+                word_vec_temp = word_model[word]
+                word_vec[(index*vector_size):((index+1)*vector_size)] = word_vec_temp
+            input_list.append(word_vec)
         elif ind in norm_list:
             # Normalize using numpy function if possible
-            pass
+            input_list.append(normalize_value_generate(element, key_list_df, ind))
+    return input_list
 
 
 # Function to generate binary vectors:
 def binary_vector_generate(val, lookup_key, ind):
     """
     Receives values and returns a binary vector
+    Searches along key to find location of target element and updates a zero-vector with an added 1 as appropriate
     """
     lu_elem = lookup_key[ind]
     vec_gen = np.zeros(len(lu_elem))
-    vec_gen[lu_elem.index(val)] = 1
-    print(vec_gen)
+    if type(val) == list:
+        for val_elem in val:
+            vec_gen[lu_elem.index(val_elem)] = 1
+    else:
+        vec_gen[lu_elem.index(val)] = 1
+    return vec_gen
 
 
-# Find location of element in key list and return binary vector
+# Function to normalize inputs to 0-100 scale
+def normalize_value_generate(val, lookup_key, ind):
+    """
+    Receives value and returns a normalized value based on lookup key
+    """
+    lu_elem = lookup_key[ind]
+    elem_min = min(lu_elem)
+    lu_elem[:] = [x - elem_min for x in lu_elem]
+    elem_shifted_max = max(lu_elem)
+    return ((val-elem_min)/elem_shifted_max)*100
 
-# Function to create input vector into neural network:
 
 # Set file path parameters:
 parent_path = '/Users/cheng-haotai/Documents/Projects_Data/IMDb_Predictor/'
 csv_name = 'movie_metadata.csv'
 csv_path = parent_path + csv_name
-# Set
+# Set model save path for Word2Vec model
+model_name = 'word_model.bin'
+model_path = parent_path + model_name
 
 # Read CSV into pandas dataframe:
 imdb_df = pd.read_csv(csv_path)
@@ -128,7 +154,7 @@ genre_index = 6
 keyword_index = 9
 genre_agg = []
 keyword_agg = []
-
+# Generate aggregated list of keys (non-unique) by iterating through columns of data frame
 for idx, col in enumerate(desired_fields):
     df_col = work_df[str(col)]
     # Checking for actor name
@@ -146,6 +172,7 @@ for idx, col in enumerate(desired_fields):
     elif idx == keyword_index:
         for phrase in df_col:
             phrase_temp = replace_pipe(phrase)
+            phrase_temp = phrase_temp.split()
             keyword_agg.append(phrase_temp)
         key_list.append('KEYWORD')
     else:
@@ -165,13 +192,35 @@ for idx, elem in enumerate(key_list):
     elif elem == 'KEYWORD':
         key_list[idx] = keyword_key
 
+# Find the number of words in the longest phrase in plot keyword list:
+phrase_len = []
+for key_phrase in keyword_key:
+    phrase_len.append(len(key_phrase))
+longest_len = max(phrase_len)
+
+# Generate a model using Word2Vec to capture relative "closeness" of phrases in plot keyword
+# Word2Vec produces word vector using deep learning
+# Word2Vec creates model from phrases and the model embeds context information into words
+# Specify parameters for Word2Vec
+vector_size = 300
+min_count = 1
+alpha = 0.025
+if not os.path.exists(model_path):
+    print('Training Word2Vec model...')
+    word_model = Word2Vec(keyword_key, size=vector_size, min_count=min_count, alpha=alpha, hs=1, negative=0)
+    word_model.save(model_path)
+else:
+    print('Loading trained model...')
+    word_model = Word2Vec.load(model_path)
+
 # Generate output vector:
 output_vector = list(work_df.imdb_score)
 
 # Generate input vectors row-by-row:
 input_vectors = []
+print('Assembling input vector...')
 for idx, row in work_df.iterrows():
-    #vector_temp = vector_gen(row)
-    vector_gen(row, key_list)
-    #input_vectors.append(vector_temp)
-    break
+    vector_temp = vector_gen(row, key_list)
+    input_vectors.append(vector_temp)
+
+print('Length of input vector is:', len(input_vectors))
