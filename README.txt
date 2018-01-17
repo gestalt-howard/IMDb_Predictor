@@ -2,10 +2,11 @@
 Takes movie data from CSV file to predict movies' IMDb score
 
 software prerequisites- 
-python (preferably 3.6.3)
-conda install numpy (should be included with python)
-conda install pandas
-conda install gensim
+python (preferably 2.7.14)
+pip install numpy (should be included with python)
+pip install pandas
+pip install gensim
+pip install keras
 
 data prerequisites-
 csv formatted with label names as first row and columns of values

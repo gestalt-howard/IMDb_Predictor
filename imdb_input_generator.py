@@ -62,8 +62,16 @@ def vector_gen(df_row, key_list_df):
             input_list.append(word_vec)
         elif ind in norm_list:
             # Normalize using numpy function if possible
-            input_list.append(normalize_value_generate(element, key_list_df, ind))
-    return input_list
+            print('Index:', ind)
+            norm_val = [normalize_value_generate(element, key_list_df, ind)]
+            print(norm_val)
+            input_list.append(norm_val)
+    # Remove boundaries between individual elements in input list
+    final_vector = []
+    for entry in input_list:
+        final_vector = final_vector + list(entry)
+    print(final_vector[1650:1670])
+    return final_vector
 
 
 # Function to generate binary vectors:
@@ -91,7 +99,8 @@ def normalize_value_generate(val, lookup_key, ind):
     elem_min = min(lu_elem)
     lu_elem[:] = [x - elem_min for x in lu_elem]
     elem_shifted_max = max(lu_elem)
-    return ((val-elem_min)/elem_shifted_max)*100
+    norm_val = (float(val-elem_min)/float(elem_shifted_max))*100
+    return norm_val
 
 
 # Set file path parameters:
@@ -178,6 +187,7 @@ for idx, col in enumerate(desired_fields):
     else:
         key_temp = key_create(df_col)
         key_list.append(key_temp)
+print(len(key_list[1]))
 
 # Create keys from aggregated lists
 act_key = sorted(list(set(actor_agg)))
@@ -222,5 +232,6 @@ print('Assembling input vector...')
 for idx, row in work_df.iterrows():
     vector_temp = vector_gen(row, key_list)
     input_vectors.append(vector_temp)
+    break
 
 print('Length of input vector is:', len(input_vectors))
