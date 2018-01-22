@@ -1,5 +1,5 @@
 # Receive input vectors from generator
-# Neural network (dense layer) model for predicting imdb movie scores
+# Neural network (dense layer) with auto-encoder model for predicting imdb movie scores
 
 import tensorflow as tf
 import numpy as np
@@ -10,18 +10,39 @@ from keras.layers import Input, Dense, Activation, core, Dropout
 from keras.optimizers import Adam, RMSprop, SGD
 
 
-def imdb_regression((size)):
-    inputs = Input((size))
+def imdb_regression(size):
+    # Input vector length on order of 22,000 elements
+    inputs = Input(size)
     dense1 = Dense(32768, name='dense1')(inputs)
-    dense2 = Dense(1024, name='dense2')(dense1)
-    dense2 = Dropout(0.2)(dense2)  # Drop percentage of values to prevent overfitting
+    dense2 = Dropout(0.2)(dense1)  # Drop percentage of values to prevent over-fitting
     # Can include as many layers in between (Dense and Dropout)
-    densef = Dense(1, activation='linear', name='densef')(dense2)
+    dense3 = Dense(8096, name='dense3')(dense2)
+    dense4 = Dropout(0.2)(dense3)
+    dense5 = Dense(2048, name='dense5')(dense4)
+    dense6 = Dropout(0.2, name='dense6')(dense5)
+    densef = Dense(1, activation='linear', name='densef')(dense6)
 
     model = Model(input=inputs, output=densef)
+    # Optimizer uses Stochastic Gradient Descent; value arbitrary but small
     opt = SGD(lr=0.00001)
     model.compile(optimizer=opt, loss='mean absolute error', metrics=['accuracy'])
     print('Successfully generated model')
     return model
 
 
+def auto_encoder(size):
+    inputs = Input(size)
+    # Reduce dimensionality
+    encoder = Dense(19000, activation='relu', name='encoder')(inputs)
+    # Bring it back in dimensionality
+    autoencoder = Dense(size[0], activation='sigmoid', name='autoencoder')(encoder)
+
+    # Model ties inputs to decoder and attaches weights
+    model_autoencoder = Model(input=inputs, output=autoencoder)
+    # Instantiate optimizer object
+    opt = Adam(lr=0.00001)
+    # Model ties inputs to encoder
+    model_encoder = Model(input=inputs, output=encoder)
+    model_autoencoder.compile(optimizer=opt, loss='mean absolute error', metrics=['accuracy'])
+    print('Auto-encoder function complete')
+    return model_encoder, model_autoencoder

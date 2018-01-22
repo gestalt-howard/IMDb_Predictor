@@ -7,6 +7,7 @@ pip install numpy (should be included with python)
 pip install pandas
 pip install gensim
 pip install keras
+pip install h5py
 
 data prerequisites-
 csv formatted with label names as first row and columns of values
@@ -14,6 +15,8 @@ advised that one label is "movie_title" and output label is "imdb_score"
 advised dataset- https://github.com/gestalt-howard/IMDb_Predictor
 
 pipeline order-
+***IMPORTANT: Must run imdb_input_generator first since this is the script that will save the training and test data sets into either pickle or h5 files
+
 imdb_input_generator-
 	- Ensure that all target file paths are correct 
 	- Takes CSV file contents and cleans the data of rows with null values 
