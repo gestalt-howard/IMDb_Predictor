@@ -10,6 +10,7 @@ from keras.layers import Input, Dense, Activation, core, Dropout
 from keras.optimizers import Adam, RMSprop, SGD
 
 
+# IMDb
 def imdb_regression(size):
     # Input vector length on order of 22,000 elements
     inputs = Input(size)
@@ -20,16 +21,19 @@ def imdb_regression(size):
     dense4 = Dropout(0.2)(dense3)
     dense5 = Dense(2048, name='dense5')(dense4)
     dense6 = Dropout(0.2, name='dense6')(dense5)
+    # Activation - element-wise operation on each output of layer
+    # Linear: y=x (specified to be explicit)
     densef = Dense(1, activation='linear', name='densef')(dense6)
 
     model = Model(input=inputs, output=densef)
     # Optimizer uses Stochastic Gradient Descent; value arbitrary but small
     opt = SGD(lr=0.00001)
-    model.compile(optimizer=opt, loss='mean absolute error', metrics=['accuracy'])
+    model.compile(optimizer=opt, loss='mean_absolute_error', metrics=['accuracy'])
     print('Successfully generated model')
     return model
 
 
+# Non-linear learning equivalent of PCA
 def auto_encoder(size):
     inputs = Input(size)
     # Reduce dimensionality
@@ -43,6 +47,6 @@ def auto_encoder(size):
     opt = Adam(lr=0.00001)
     # Model ties inputs to encoder
     model_encoder = Model(input=inputs, output=encoder)
-    model_autoencoder.compile(optimizer=opt, loss='mean absolute error', metrics=['accuracy'])
+    model_autoencoder.compile(optimizer=opt, loss='mean_absolute_error', metrics=['accuracy'])
     print('Auto-encoder function complete')
     return model_encoder, model_autoencoder

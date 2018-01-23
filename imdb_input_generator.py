@@ -121,6 +121,7 @@ def input_generator(train, output_f, input_f):
     print('Length of input data first element', input_len)
     print('Function runs!')
     while 1:
+        # While 1 to ensure that generator calls won't ever break
         for t_index in train_data:
             # np.zeros syntax (# elem in list, # sub-elem per elem:
             placeholder_input = np.zeros((1, input_len))
