@@ -6,20 +6,18 @@ import h5py
 
 
 # Generator for creating network inputs for IMDb
-def input_generator(train, output_f, input_f):
+def input_generator(train, output_f, input_f, tdata_name):
     # Open train set:
     with open(train, 'rb') as train_set:
         train_data = pkl.load(train_set)
     # Open input set:
     with h5py.File(input_f, 'r') as input_set:
-        input_data = input_set['transformed_data'][:]
+        input_data = input_set[tdata_name][:]
     # Open output set:
     with open(output_f, 'rb') as output_set:
         output_data = pkl.load(output_set)
     # (input, output)
     input_len = len(input_data[0])
-    print('Length of input data first element', input_len)
-    print('Function runs!')
     while 1:
         # While 1 to ensure that generator calls won't ever break
         for t_index in train_data:

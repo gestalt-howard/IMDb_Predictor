@@ -37,7 +37,7 @@ def imdb_regression(size):
 def auto_encoder(size):
     inputs = Input(size)  # Needs tuple input
     # Reduce dimensionality
-    encoder = Dense(5000, activation='relu', name='encoder')(inputs)
+    encoder = Dense(10000, activation='relu', name='encoder')(inputs)
     # Bring it back in dimensionality
     autoencoder = Dense(size[0], activation='sigmoid', name='autoencoder')(encoder)
 
