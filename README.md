@@ -1,7 +1,7 @@
 # IMDb_Predictor
 Takes movie data from CSV file to predict movies' IMDb score.
 
-<mark>***IMPORTANT: This is currently an ongoing project. Please check back frequently for updates!***</mark>
+***IMPORTANT: This is currently an ongoing project. Please check back frequently for updates!***
 
 ***DISCLAIMER***
 I do not own this dataset. The original dataset was pulled from: https://www.kaggle.com/tmdb/tmdb-movie-metadata in early 2017. The dataset has since changed and WILL NOT be compatible with the scripts in this repo.
