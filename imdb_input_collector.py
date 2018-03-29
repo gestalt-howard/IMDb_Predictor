@@ -160,7 +160,7 @@ else:
 
 
 # Set csv file path parameters:
-csv_name = 'movie_metadata_debug.csv'
+csv_name = 'movie_metadata.csv'
 csv_path = parent_path + csv_name
 
 
