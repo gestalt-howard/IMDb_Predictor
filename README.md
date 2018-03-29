@@ -1,7 +1,6 @@
 # IMDb_Predictor
 Takes movie data from CSV file to predict movies' IMDb score.
-![Image of movie reel]
-(https://github.com/gestalt-howard/IMDb_Predictor/blob/master/images/Movie-Tavern-Blog-Hero-Image.jpg)
+![Image of movie reel](https://github.com/gestalt-howard/IMDb_Predictor/blob/master/images/Movie-Tavern-Blog-Hero-Image.jpg)
 
 ***IMPORTANT: This is currently an ongoing project. Please check back frequently for updates!***
 
