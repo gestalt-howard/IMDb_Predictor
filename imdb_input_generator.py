@@ -31,16 +31,13 @@ def input_generator(train, output_f, input_f, tdata_name):
 
 
 # Generator for creating auto-encoder inputs
-def autoencoder_generator(train, input_f):
-    # Open train set:
-    with open(train, 'rb') as train_set:
-        train_data = pkl.load(train_set)
+def autoencoder_generator(input_f):
     # Open input set:
     with h5py.File(input_f, 'r') as input_set:
         input_data = input_set['input_dataset'][:]
     input_len = len(input_data[0])
     while 1:
-        for t_index in train_data:
+        for row in input_data:
             placeholder = np.zeros((1, input_len))
-            placeholder[0] = input_data[t_index]
+            placeholder[0] = row
             yield((placeholder, placeholder))
