@@ -98,7 +98,7 @@ Use either:
 	* **movie_prediction_3.csv**
 	* **test_index.pickle**
 
-### 3. Analysis is Performed
+### 3. Analysis is Performed:
 For this section, use only *imdb_analysis.ipynb*. Due to the need for data visualization, Jupyter Notebook is the ideal way for this segment of the project to be presented. Plus, Jupyter is lots of fun!
 
 #### 3.1 Actions Taken:
