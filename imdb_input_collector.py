@@ -3,6 +3,22 @@
 
 # # Input Collector for IMDb Predictor Neural Network
 
+# In[ ]:
+
+
+# Debug flag
+debug = 0
+# Define parent path of working directory:
+parent_path = '/Users/cheng-haotai/Documents/Projects_Data/IMDb_Predictor/'
+# Set csv file path parameters:
+if debug == 1:
+    csv_name = 'movie_metadata_debug.csv'
+else:
+    csv_name = 'movie_metadata.csv'
+csv_path = parent_path + csv_name
+print 'CSV file used for analysis:\n', csv_path
+
+
 # The purpose of this script is to extract data from a CSV file containing information on approximately 5000 movies, clean the extracted data, and format it for input into a neural network.
 
 # In[ ]:
@@ -140,13 +156,6 @@ def vector_gen(df_row, key_list_df, longest_len, vector_size, word_model, desire
 # In[ ]:
 
 
-# Define parent path of working directory:
-parent_path = '/Users/cheng-haotai/Documents/Projects_Data/IMDb_Predictor/'
-
-
-# In[ ]:
-
-
 # Define path of predictions folder (for later analysis):
 prediction_path = parent_path + 'prediction_results/'
 if not os.path.exists(prediction_path):
@@ -159,24 +168,10 @@ else:
 # In[ ]:
 
 
-# Set csv file path parameters:
-csv_name = 'movie_metadata.csv'
-csv_path = parent_path + csv_name
-
-
-# In[ ]:
-
-
 # Set model save path for Word2Vec model
 model_name = 'word_model.bin'
 model_folder = 'training_data/'
 model_path = parent_path + model_folder + model_name
-
-
-# In[ ]:
-
-
-print(model_path)
 
 
 # In[ ]:
