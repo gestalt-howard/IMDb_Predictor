@@ -16,6 +16,11 @@ Please continue reading below to find required software packages and instruction
 * pip install h5py
 * pip install jupyter
 
+## Hardware Prerequisites:
+**IMPORTANT:** IMDb Predictor requires a very powerful GPU to train the auto-encoder and multilayer perceptron. The recommended GPU is ***Tesla V100 PCIe***. Using AWS EC2 is also an option although be aware of the fast-accruing costs!
+
+It is also possible to run through IMDb Predictor using a much-reduced dataset. The inclusion of *movie_metadata_debug* in this repo is for this exact purpose. You can get a good understanding of how these scripts are meant to work using this dataset.
+
 ## Data Prerequisites:
 * CSV formatted with label names as first row and columns of values
 	* Advised Dataset- https://github.com/gestalt-howard/IMDb_Predictor
@@ -32,6 +37,8 @@ Use *imdb_input_collector.ipynb*
 
 #### 1.1 Actions Taken:
 1. **User Action Required:** Ensure that all target file paths (i.e. file name, folder directory structure, etc...) are correct
+	* **IMPORTANT:** If you'd like to run through the scripts in debug mode, set the `debug_flag` at the top of the Jupyter script to `0`
+	* The remaining scripts are dependent on this initial `debug_flag` value
 2. Takes CSV file contents and cleans the data of rows with null values
 3. Takes subset of remaining dataset and formats fields into binary vectors, normalized values, and word vector with embedded context information
 	* Word vector embedding performed using Word2Vector from the gensim library
