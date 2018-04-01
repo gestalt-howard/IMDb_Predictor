@@ -21,7 +21,7 @@ Please continue reading below to find required software packages and instruction
 ## Hardware Prerequisites:
 **IMPORTANT:** IMDb Predictor requires a very powerful GPU to train the auto-encoder and multilayer perceptron. The recommended GPU is ***Tesla V100 PCIe***. Using AWS EC2 is also an option although be aware of the fast-accruing costs!
 
-It is also possible to run through IMDb Predictor using a much-reduced dataset. The inclusion of *movie_metadata_debug* in this repo is for this exact purpose. You can get a good understanding of how these scripts are meant to work using this dataset.
+It is also possible to run through IMDb Predictor using a much-reduced dataset. The inclusion of *movie_metadata_debug.csv* in this repo is for this exact purpose. You can get a good understanding of how these scripts are meant to work using this dataset.
 
 ## Data Prerequisites:
 * CSV formatted with label names as first row and columns of values
