@@ -1,6 +1,8 @@
 # IMDb Predictor
 Welcome to my personal project! The IMDb Predictor is a neural network that uses deep learning to be able to predict movies' IMDb scores based on a variety of factors (i.e. budget, actor names, director names, facebook likes, etc...). The IMDb Predictor neural network features a **multilayer perceptron** for generating score predictions and an **auto-encoder** to perform dimensionality reduction on the training datasets.
 
+**Please reference imdb_analysis.ipynb to see the results of an IMDb Predictor run and my analysis of these results.**
+
 Please continue reading below to find required software packages and instructions for the correct order in which to run the scripts.
 
 ![Image of movie reel](https://github.com/gestalt-howard/IMDb_Predictor/blob/master/images/Movie-Tavern-Blog-Hero-Image.jpg)
