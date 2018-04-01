@@ -21,6 +21,7 @@ Please continue reading below to find required software packages and instruction
 	* Advised Dataset- https://github.com/gestalt-howard/IMDb_Predictor
 
 ## Pipeline Overview:
+I recommend using Jupyter's **Restart and Run All** function accessed in the ***Kernel*** tab on the top toolbar.
 1. Run through the ***imdb_input_collector.ipynb*** notebook to generate data required for training the neural network
 2. Run through the ***imdb_training_script.ipynb*** notebook to train the neural network and output score predictions
 3. Run through the ***imdb_analysis.ipynb*** to visualize and assess the neural network's performance. *(Note: The file shown in this repo already contains the results of my own personal analysis.)*
