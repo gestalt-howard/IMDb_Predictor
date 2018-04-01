@@ -1,11 +1,11 @@
 # IMDb Predictor
-Welcome to my personal project! The IMDb Predictor is a neural network that uses deep learning to be able to predict movies' IMDb scores based on a variety of factors (i.e. budget, actor names, director names, facebook likes, etc...). Please continue reading below to find required software packages and instructions for the correct order in which to run the scripts.
+Welcome to my personal project! The IMDb Predictor is a neural network that uses deep learning to be able to predict movies' IMDb scores based on a variety of factors (i.e. budget, actor names, director names, facebook likes, etc...). The IMDb Predictor neural network features a **multilayer perceptron** for generating score predictions and an **auto-encoder** to perform dimensionality reduction on the training datasets.
+
+Please continue reading below to find required software packages and instructions for the correct order in which to run the scripts.
 
 ![Image of movie reel](https://github.com/gestalt-howard/IMDb_Predictor/blob/master/images/Movie-Tavern-Blog-Hero-Image.jpg)
 
-***DISCLAIMER 1: This is currently an ongoing project. Please check back frequently for updates!***
-
-***DISCLAIMER 2: I do not own this dataset. The original dataset was pulled from: https://www.kaggle.com/tmdb/tmdb-movie-metadata in early 2017. The dataset has since changed and WILL NOT be compatible with the scripts in this repo.***
+***DISCLAIMER 1: I do not own this dataset. The original dataset was pulled from: https://www.kaggle.com/tmdb/tmdb-movie-metadata in early 2017. The dataset has since changed and WILL NOT be compatible with the scripts in this repo.***
 
 ## Software Prerequisites:
 * python (2.7.14 required)
@@ -20,16 +20,14 @@ Welcome to my personal project! The IMDb Predictor is a neural network that uses
 * CSV formatted with label names as first row and columns of values
 	* Advised Dataset- https://github.com/gestalt-howard/IMDb_Predictor
 
-## Command-Line Option:
-**Please be sure that the Python version is 2.7**
-1. Run *imdb_input_collector.py* in command line
-2. Run *imdb_training_script.py* in command line
+## Pipeline Overview:
+1. Run through the ***imdb_input_collector.ipynb*** notebook to generate data required for training the neural network
+2. Run through the ***imdb_training_script.ipynb*** notebook to train the neural network and output score predictions
+3. Run through the ***imdb_analysis.ipynb*** to visualize and assess the neural network's performance. *(Note: The file shown in this repo already contains the results of my own personal analysis.)*
 
 ## Detailed Pipeline Order:
 ### 1. Clean Data and Format for Neural Network:
-Use either:
-* *imdb_input_collector.py*
-* *imdb_input_collector.ipynb* for a Jupyter Notebook interface (recommended)
+Use *imdb_input_collector.ipynb*
 
 #### 1.1 Actions Taken:
 1. **User Action Required:** Ensure that all target file paths (i.e. file name, folder directory structure, etc...) are correct
@@ -61,11 +59,16 @@ Use either:
 	* **test_index.pickle**
 		* Same file as in the *training_data* folder
 		* This occurrence is used for analysis of the prediction results
+	* **train1_index.pickle**
+		* Same file as in the *training_data* folder
+		* Used for analysis of the prediction results
+	* **train2_index.pickle**
+		* Same as above
+	* **train3_index.pickle**
+		* Same as above
 
 ### 2. Train the Neural Networks and Predict Results:
-Use either:
-* *imdb_training_script.py*
-* *imdb_training_script.ipynb* for a Jupyter Notebook interface (recommended)
+Use *imdb_training_script.ipynb*
 
 #### 2.1 Actions Taken:
 1. **User Action Required:** Ensure that all target file paths (i.e. file name, folder directory structure, etc...) are correct
@@ -99,9 +102,19 @@ Use either:
 	* **test_index.pickle**
 
 ### 3. Analysis is Performed:
-For this section, use only *imdb_analysis.ipynb*. Due to the need for data visualization, Jupyter Notebook is the ideal way for this segment of the project to be presented. Plus, Jupyter is lots of fun!
+Use *imdb_analysis.ipynb*
 
 #### 3.1 Actions Taken:
+1. **User Action Required:** Ensure that all target file paths (i.e. file name, folder directory structure, etc...) are correct
+2. Reformat the prediction results and import the results into a pandas dataframe
+3. Calculate average prediction results and basic statistical values
+4. Visualize the prediction results and assess the performance of the neural network by conducting null hypothesis testing, plotting Gaussians, and looking at outliers
 
-
-***TO BE CONTINUED...***
+#### 3.2 Folders and Files Generated:
+* ***prediction_results/formatted_predictions (folder)***
+	* **formatted_1.csv**
+		* Contains formatted prediction results for training set 1
+	* **formatted_2.csv**
+		* Same as above for training set 2
+	* **formatted_3.csv**
+		* Same as above for training set 3
